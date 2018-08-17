@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import de.mss.logging.BaseLogger;
+import de.mss.logging.LoggingFactory;
+import de.mss.utils.Tools;
+
 public abstract class ConfigFile {
 
    protected Map<String, String> configValues    = new HashMap<>();
@@ -20,14 +24,27 @@ public abstract class ConfigFile {
    protected String              configSeparator = ".";
    protected String              lineSeparator   = System.getProperty("line.separator");
 
+   protected BaseLogger          logger          = null;
+
 
    public ConfigFile(String filename) {
+      logger = LoggingFactory.createInstance("config", new BaseLogger());
       try {
          loadConfig(new File(filename));
       }
       catch (IOException e) {
-         // TO DO Auto-generated catch block
-         e.printStackTrace();
+         logger.logError(Tools.getId(new Throwable()), e);
+      }
+   }
+
+
+   public ConfigFile(String filename, BaseLogger l) {
+      logger = l;
+      try {
+         loadConfig(new File(filename));
+      }
+      catch (IOException e) {
+         logger.logError(Tools.getId(new Throwable()), e);
       }
    }
 
