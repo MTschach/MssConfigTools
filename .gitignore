@@ -6,3 +6,5 @@ gradle/
 .gradle
 .settings
 
+/gradlew
+/gradlew.bat
