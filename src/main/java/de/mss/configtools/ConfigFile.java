@@ -28,23 +28,23 @@ public abstract class ConfigFile {
 
 
    public ConfigFile(String filename) {
-      logger = LoggingFactory.createInstance("config", new BaseLogger());
+      this.logger = LoggingFactory.createInstance("config", new BaseLogger());
       try {
          loadConfig(new File(filename));
       }
       catch (IOException e) {
-         logger.logError(Tools.getId(new Throwable()), e);
+         this.logger.logError(Tools.getId(new Throwable()), e);
       }
    }
 
 
    public ConfigFile(String filename, BaseLogger l) {
-      logger = l;
+      this.logger = l;
       try {
          loadConfig(new File(filename));
       }
       catch (IOException e) {
-         logger.logError(Tools.getId(new Throwable()), e);
+         this.logger.logError(Tools.getId(new Throwable()), e);
       }
    }
 
@@ -65,7 +65,17 @@ public abstract class ConfigFile {
 
 
    public String getConfigSeparator() {
-      return configSeparator;
+      return this.configSeparator;
+   }
+
+
+   public void removeKey(String key) {
+      Set<String> keys = getKeys();
+
+      for (String k : keys) {
+         if (k.startsWith(key))
+            this.configValues.remove(k);
+      }
    }
 
 
@@ -163,14 +173,11 @@ public abstract class ConfigFile {
    }
 
 
-   protected void insertKeyValue(String key, String value) {
-      if (!isSet(key))
-         return;
+   public void insertKeyValue(String key, String value) {
+      if (this.configValues.containsKey(key))
+         this.configValues.remove(key);
 
-      if (configValues.containsKey(key))
-         configValues.remove(key);
-
-      configValues.put(key, isSet(value) ? value : "");
+      this.configValues.put(key, isSet(value) ? value : "");
    }
 
 
@@ -201,7 +208,7 @@ public abstract class ConfigFile {
 
 
    public void setConfigSeparator(String c) {
-      configSeparator = c;
+      this.configSeparator = c;
    }
 
 
