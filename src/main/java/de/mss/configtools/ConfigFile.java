@@ -11,8 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import de.mss.logging.BaseLogger;
-import de.mss.logging.LoggingFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.mss.utils.Tools;
 
 public abstract class ConfigFile {
@@ -24,27 +25,27 @@ public abstract class ConfigFile {
    protected String              configSeparator = ".";
    protected String              lineSeparator   = System.getProperty("line.separator");
 
-   protected BaseLogger          logger          = null;
+   protected Logger              logger          = null;
 
 
    public ConfigFile(String filename) {
-      this.logger = LoggingFactory.createInstance("config", new BaseLogger());
+      this.logger = LogManager.getLogger("config");
       try {
          loadConfig(new File(filename));
       }
       catch (IOException e) {
-         this.logger.logError(Tools.getId(new Throwable()), e);
+         this.logger.error(Tools.getId(new Throwable()), e);
       }
    }
 
 
-   public ConfigFile(String filename, BaseLogger l) {
+   public ConfigFile(String filename, Logger l) {
       this.logger = l;
       try {
          loadConfig(new File(filename));
       }
       catch (IOException e) {
-         this.logger.logError(Tools.getId(new Throwable()), e);
+         this.logger.error(Tools.getId(new Throwable()), e);
       }
    }
 
