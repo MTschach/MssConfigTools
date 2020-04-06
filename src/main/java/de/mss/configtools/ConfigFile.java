@@ -8,8 +8,11 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -132,7 +135,7 @@ public abstract class ConfigFile {
          return defaultValue;
 
       try {
-         return new Double(this.configValues.get(key));
+         return Double.parseDouble(this.configValues.get(key));
       }
       catch (NumberFormatException nfe) {
          return defaultValue;
@@ -145,7 +148,7 @@ public abstract class ConfigFile {
          return defaultValue;
 
       try {
-         return new Float(this.configValues.get(key));
+         return Float.parseFloat(this.configValues.get(key));
       }
       catch (NumberFormatException nfe) {
          return defaultValue;
@@ -158,7 +161,7 @@ public abstract class ConfigFile {
          return defaultValue;
 
       try {
-         return new Integer(this.configValues.get(key));
+         return Integer.parseInt(this.configValues.get(key));
       }
       catch (NumberFormatException nfe) {
          return defaultValue;
@@ -227,4 +230,41 @@ public abstract class ConfigFile {
 
 
    public abstract String writeConfig();
+   
+   
+   protected Map<String, HashMapEntry> toHierarchicalStructure() {
+      Map<String,HashMapEntry> mapEntries = new TreeMap<>();
+
+      for (Entry<String, String> entry : configValues.entrySet()) {
+         if (!entry.getKey().contains(configSeparator))
+            mapEntries.put(entry.getKey(), new HashMapEntry(entry.getKey(), entry.getValue()));
+         else {
+            String newKey = entry.getKey().substring(0, entry.getKey().indexOf(configSeparator));
+            String subKey = entry.getKey().substring(entry.getKey().indexOf(configSeparator) + 1);
+
+            mapEntries.put(newKey, addEntry(mapEntries.get(newKey), newKey, subKey, entry.getValue()));
+         }
+      }
+
+      return mapEntries;
+   }
+   
+   
+   private HashMapEntry addEntry(HashMapEntry hashMapEntry, String mapKey, String key, String value) {
+      if (hashMapEntry == null)
+         hashMapEntry = new HashMapEntry(mapKey, (String)null);
+      
+      if (hashMapEntry.getMapEntry() == null)
+         hashMapEntry.setMapEntry(new HashMap<>());
+      
+      if (!key.contains(configSeparator))
+         hashMapEntry.getMapEntry().put(key, new HashMapEntry(key, value));
+      else {
+         String newKey = key.substring(0, key.indexOf(configSeparator));
+         String subKey = key.substring(key.indexOf(configSeparator) + 1);
+         
+         hashMapEntry.getMapEntry().put(newKey, addEntry(hashMapEntry.getMapEntry().get(newKey), newKey, subKey, value));
+      }
+      return hashMapEntry;
+   }
 }

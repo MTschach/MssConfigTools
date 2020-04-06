@@ -60,15 +60,17 @@ public class IniConfigFile extends ConfigFile {
       
       String key = line.substring(0, index);
       String value = line.substring(index+1);
-      
-      insertKeyValue(key, value);
+      if (de.mss.utils.Tools.isSet(path))
+         insertKeyValue(path + configSeparator + key, value);
+      else
+         insertKeyValue(key, value);
    }
 
 
    private String extraxtPath(String line) {
       line = line.substring(1, line.indexOf(']'));
       
-      return line.replaceAll("/", configSeparator).replaceAll("\\", configSeparator);
+      return line.replace("/", configSeparator).replace("\\", configSeparator);
    }
    
    

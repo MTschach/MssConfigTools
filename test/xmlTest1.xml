@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+   <contact>
+      <name>Michael</name>
+	  <tel>
+	     <type>private</type>
+	     <number>0123456789</number>
+	  </tel>
+	  <mobile>
+	     <type>business</type>
+	     <number>0987654321</number>
+	  </mobile>
+   </contact>
+   <address>
+	  <name>Michaels address</name>
+      <street>JUnit-Weg</street>
+	  <number>1</number>
+      <postCode>01234</postCode>
+	  <city>Schmölln</city>
+   </address>
+</data>

@@ -1,11 +1,9 @@
 package de.mss.configtools;
 
-import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -104,7 +102,6 @@ public class XmlConfigFile2 extends ConfigFile {
    }
 
 
-   @SuppressWarnings("unchecked")
    private String writeConfigValues(HashMap<String, ConfigObject> recursiveConfigValues, String spacer) {
       StringBuilder sb = new StringBuilder();
       
