@@ -1,13 +1,9 @@
 package de.mss.configtools;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 public class PropertiesConfigFile extends ConfigFile {
    

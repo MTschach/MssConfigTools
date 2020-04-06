@@ -1,7 +1,5 @@
 package de.mss.configtools;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HashMapEntry implements java.io.Serializable {
