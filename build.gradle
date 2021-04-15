@@ -18,36 +18,49 @@ buildscript {
     repositories {
         jcenter()
     }
-	dependencies {
-		classpath 'com.android.tools.build:gradle:2.2.2'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+   dependencies {
+      classpath 'com.android.tools.build:gradle:2.2.2'
+      classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+      classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release'
     }
 }
 
 
 allprojects {
-	repositories {
-		jcenter()
-	}
+   repositories {
+      jcenter()
+   }
 }
 
 // In this section you declare where to find the dependencies of your project
 repositories {
    jcenter()
-	maven {
-		url "https://dl.bintray.com/mtschach/Mss"
-	}
+   maven {
+      url 'https://mtschach.jfrog.io/artifactory/mss-repo'
+   }
+}
+
+
+sourceSets {
+   main {
+      java {
+         srcDir 'src'
+      }
+   }
+   test {
+      java {
+         srcDir 'test'
+      }
+   }
 }
 
 
 dependencies {
-//	compile 'Mss:MssLogging:latest.release'
    compile 'org.apache.logging.log4j:log4j-core:latest.release'
    compile 'org.apache.logging.log4j:log4j-api:latest.release'
-	compile 'Mss:MssUtils:0.1.2'
-	
-	testImplementation 'junit:junit:4.12'
+   compile 'Mss:MssUtils:latest.release'
+   
+   testImplementation 'junit:junit:4.12'
 }
 
 //create a single Jar with all dependencies
@@ -61,6 +74,5 @@ task fatJar(type: Jar) {
     with jar
 }
 
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
 
-
-apply from: 'deploy.gradle'
