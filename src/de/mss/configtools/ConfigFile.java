@@ -204,12 +204,12 @@ public abstract class ConfigFile {
    }
 
 
-   protected void insertKeyValue(String key, String value) {
+   public void insertKeyValue(String key, String value) {
       insertKeyValue(key, value, true);
    }
 
 
-   protected void insertKeyValue(String key, String value, boolean append) {
+   public void insertKeyValue(String key, String value, boolean append) {
       if (!append) {
          this.configValues.put(key, new ConfigValue(isSet(value) ? value : ""));
          return;
