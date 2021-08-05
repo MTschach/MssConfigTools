@@ -25,21 +25,7 @@ buildscript {
     }
 }
 
-
-allprojects {
-   repositories {
-      jcenter()
-   }
-}
-
-// In this section you declare where to find the dependencies of your project
-repositories {
-   jcenter()
-   maven {
-      url 'https://mtschach.jfrog.io/artifactory/mss-repo'
-   }
-}
-
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
 
 sourceSets {
    main {
@@ -66,7 +52,7 @@ dependencies {
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
    manifest {
-        attributes 'Implementation-Title': 'MssTools',  
+        attributes 'Implementation-Title': 'MssConfigTools',  
          'Implementation-Version': version
     }
     baseName = project.name + '-all'
