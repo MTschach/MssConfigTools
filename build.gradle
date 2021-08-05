@@ -25,6 +25,8 @@ buildscript {
     }
 }
 
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
+
 apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
 
 sourceSets {
@@ -59,6 +61,3 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
-
-apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
-
