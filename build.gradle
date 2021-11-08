@@ -44,9 +44,9 @@ sourceSets {
 
 
 dependencies {
-   compile 'org.apache.logging.log4j:log4j-core:latest.release'
-   compile 'org.apache.logging.log4j:log4j-api:latest.release'
-   compile 'Mss:MssUtils:latest.release'
+   implementation 'org.apache.logging.log4j:log4j-core:latest.release'
+   implementation 'org.apache.logging.log4j:log4j-api:latest.release'
+   implementation 'Mss:MssUtils:latest.release'
    
    testImplementation 'junit:junit:4.12'
 }

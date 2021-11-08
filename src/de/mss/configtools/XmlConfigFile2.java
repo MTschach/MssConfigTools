@@ -35,36 +35,38 @@ public class XmlConfigFile2 extends ConfigFile {
 
 
    private HashMap<String, ConfigObject> addEntry(HashMap<String, ConfigObject> recursiveConfigValues, String key, String value) {
-      if (recursiveConfigValues == null) {
-         recursiveConfigValues = new HashMap<>();
+      HashMap<String, ConfigObject> ret = recursiveConfigValues;
+      if (ret == null) {
+         ret = new HashMap<>();
       }
 
 
       if (!key.contains(this.configSeparator)) {
-         return addValue(recursiveConfigValues, key, value);
+         return addValue(ret, key, value);
       }
 
       final String newKey = key.substring(0, key.indexOf(this.configSeparator));
       final String subKey = key.substring(key.indexOf(this.configSeparator) + 1);
 
       final ConfigObject co = new ConfigObject();
-      co.configValue = addEntry(recursiveConfigValues.get(newKey).configValue, subKey, value);
-      recursiveConfigValues.put(newKey, co);
+      co.configValue = addEntry(ret.get(newKey).configValue, subKey, value);
+      ret.put(newKey, co);
 
-      return recursiveConfigValues;
+      return ret;
    }
 
 
    private HashMap<String, ConfigObject> addValue(HashMap<String, ConfigObject> recursiveConfigValues, String key, String value) {
-      if (recursiveConfigValues == null) {
-         recursiveConfigValues = new HashMap<>();
+      HashMap<String, ConfigObject> ret = recursiveConfigValues;
+      if (ret == null) {
+         ret = new HashMap<>();
       }
       final ConfigObject co = new ConfigObject();
       co.value = value;
 
-      recursiveConfigValues.put(key, co);
+      ret.put(key, co);
 
-      return recursiveConfigValues;
+      return ret;
    }
 
 
