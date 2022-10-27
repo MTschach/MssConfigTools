@@ -1,21 +1,23 @@
 package de.mss.configtools;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.HashMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
-
-public class HashMapEntryTest extends TestCase {
+public class HashMapEntryTest {
 
    @Test
    public void test() {
       final HashMapEntry t = new HashMapEntry();
 
-      assertNull("key", t.getKey());
-      assertNull("value", t.getValue());
-      assertNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "", t.toString());
+      assertNull(t.getKey());
+      assertNull(t.getValue());
+      assertNull(t.getMapEntry());
+      assertEquals("", t.toString());
    }
 
 
@@ -23,10 +25,10 @@ public class HashMapEntryTest extends TestCase {
    public void test2() {
       final HashMapEntry t = new HashMapEntry("key", "value");
 
-      assertEquals("key", "key", t.getKey());
-      assertEquals("value", "value", t.getValue());
-      assertNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "Key: key, Value: value", t.toString());
+      assertEquals("key", t.getKey());
+      assertEquals("value", t.getValue());
+      assertNull(t.getMapEntry());
+      assertEquals("Key: key, Value: value", t.toString());
    }
 
 
@@ -34,10 +36,10 @@ public class HashMapEntryTest extends TestCase {
    public void test3() {
       final HashMapEntry t = new HashMapEntry("key", new HashMap<>());
 
-      assertEquals("key", "key", t.getKey());
-      assertNull("value", t.getValue());
-      assertNotNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "Key: key, MapEntry: {}", t.toString());
+      assertEquals("key", t.getKey());
+      assertNull(t.getValue());
+      assertNotNull(t.getMapEntry());
+      assertEquals("Key: key, MapEntry: {}", t.toString());
    }
 
 
@@ -48,10 +50,10 @@ public class HashMapEntryTest extends TestCase {
       t.setMapEntry(new HashMap<>());
       t.setValue("value");
 
-      assertEquals("key", "key", t.getKey());
-      assertEquals("value", "value", t.getValue());
-      assertNotNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "Key: key, MapEntry: {}, Value: value", t.toString());
+      assertEquals("key", t.getKey());
+      assertEquals("value", t.getValue());
+      assertNotNull(t.getMapEntry());
+      assertEquals("Key: key, MapEntry: {}, Value: value", t.toString());
    }
 
 
@@ -60,10 +62,10 @@ public class HashMapEntryTest extends TestCase {
       final HashMapEntry t = new HashMapEntry();
       t.setMapEntry(new HashMap<>());
 
-      assertNull("key", t.getKey());
-      assertNull("value", t.getValue());
-      assertNotNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "MapEntry: {}", t.toString());
+      assertNull(t.getKey());
+      assertNull(t.getValue());
+      assertNotNull(t.getMapEntry());
+      assertEquals("MapEntry: {}", t.toString());
    }
 
 
@@ -72,9 +74,9 @@ public class HashMapEntryTest extends TestCase {
       final HashMapEntry t = new HashMapEntry();
       t.setValue("value");
 
-      assertNull("key", t.getKey());
-      assertEquals("value", "value", t.getValue());
-      assertNull("mapEntry", t.getMapEntry());
-      assertEquals("toString", "Value: value", t.toString());
+      assertNull(t.getKey());
+      assertEquals("value", t.getValue());
+      assertNull(t.getMapEntry());
+      assertEquals("Value: value", t.toString());
    }
 }

@@ -1,10 +1,10 @@
 package de.mss.configtools;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class ConfigToolsTest extends TestCase {
+public class ConfigToolsTest {
 
    private static final String XML_FILE_NAME   = "test/xmlTest1.xml";
    private static final String INI_FILE_NAME   = "test/iniTest1.ini";
@@ -12,33 +12,33 @@ public class ConfigToolsTest extends TestCase {
 
 
    private void doConfigTests(ConfigFile cfg) {
-      assertEquals("name", "Michael", cfg.getValue("data.contact.name", ""));
-      assertEquals("private phone", "0123456789", cfg.getValue("data.contact.tel.number", ""));
-      assertEquals("private type", "private", cfg.getValue("data.contact.tel.type", ""));
-      assertEquals("mobile phone", "0987654321", cfg.getValue("data.contact.mobile.number", ""));
-      assertEquals("mobile type", "business", cfg.getValue("data.contact.mobile.type", ""));
-      assertEquals("address", "Michaels address", cfg.getValue("data.address.name", ""));
-      assertEquals("street", "JUnit-Weg", cfg.getValue("data.address.street", ""));
-      assertEquals("number", "1", cfg.getValue("data.address.number", ""));
-      assertEquals("postCode", "01234", cfg.getValue("data.address.postCode", ""));
-      assertEquals("city", "Schmölln", cfg.getValue("data.address.city", ""));
+      assertEquals("Michael", cfg.getValue("data.contact.name", ""));
+      assertEquals("0123456789", cfg.getValue("data.contact.tel.number", ""));
+      assertEquals("private", cfg.getValue("data.contact.tel.type", ""));
+      assertEquals("0987654321", cfg.getValue("data.contact.mobile.number", ""));
+      assertEquals("business", cfg.getValue("data.contact.mobile.type", ""));
+      assertEquals("Michaels address", cfg.getValue("data.address.name", ""));
+      assertEquals("JUnit-Weg", cfg.getValue("data.address.street", ""));
+      assertEquals("1", cfg.getValue("data.address.number", ""));
+      assertEquals("01234", cfg.getValue("data.address.postCode", ""));
+      assertEquals("Schmölln", cfg.getValue("data.address.city", ""));
 
       cfg.insertKeyValue("data.contact.email.type", "private", true);
       cfg.insertKeyValue("data.contact.email.number", "e.mail@gmail.com", true);
       cfg.insertKeyValue("data.contact.tel.number", "2345678901", true);
 
-      assertEquals("name after", "Michael", cfg.getValue("data.contact.name", ""));
-      assertEquals("private phone after", "2345678901", cfg.getValue("data.contact.tel.number", ""));
-      assertEquals("private type after", "private", cfg.getValue("data.contact.tel.type", ""));
-      assertEquals("mobile phone after", "0987654321", cfg.getValue("data.contact.mobile.number", ""));
-      assertEquals("mobile type after", "business", cfg.getValue("data.contact.mobile.type", ""));
-      assertEquals("email phone after", "e.mail@gmail.com", cfg.getValue("data.contact.email.number", ""));
-      assertEquals("email type after", "private", cfg.getValue("data.contact.email.type", ""));
-      assertEquals("address after", "Michaels address", cfg.getValue("data.address.name", ""));
-      assertEquals("street after", "JUnit-Weg", cfg.getValue("data.address.street", ""));
-      assertEquals("number after", "1", cfg.getValue("data.address.number", ""));
-      assertEquals("postCode after", "01234", cfg.getValue("data.address.postCode", ""));
-      assertEquals("city after", "Schmölln", cfg.getValue("data.address.city", ""));
+      assertEquals("Michael", cfg.getValue("data.contact.name", ""));
+      assertEquals("2345678901", cfg.getValue("data.contact.tel.number", ""));
+      assertEquals("private", cfg.getValue("data.contact.tel.type", ""));
+      assertEquals("0987654321", cfg.getValue("data.contact.mobile.number", ""));
+      assertEquals("business", cfg.getValue("data.contact.mobile.type", ""));
+      assertEquals("e.mail@gmail.com", cfg.getValue("data.contact.email.number", ""));
+      assertEquals("private", cfg.getValue("data.contact.email.type", ""));
+      assertEquals("Michaels address", cfg.getValue("data.address.name", ""));
+      assertEquals("JUnit-Weg", cfg.getValue("data.address.street", ""));
+      assertEquals("1", cfg.getValue("data.address.number", ""));
+      assertEquals("01234", cfg.getValue("data.address.postCode", ""));
+      assertEquals("Schmölln", cfg.getValue("data.address.city", ""));
    }
 
 
@@ -49,7 +49,7 @@ public class ConfigToolsTest extends TestCase {
       doConfigTests(cfg);
 
       //@formatter:off
-      assertEquals("written config after tests", "name=JUnit\n\n" +
+      assertEquals("name=JUnit\n\n" +
 
                                                  "[data.contact.mobile]\n" +
                                                  "number=0987654321\n" +
@@ -87,7 +87,7 @@ public class ConfigToolsTest extends TestCase {
       doConfigTests(cfg);
 
       //@formatter:off
-      assertEquals("written config after tests", cfg.writeConfig(), "data.contact.mobile.type=business\n" +
+      assertEquals(cfg.writeConfig(), "data.contact.mobile.type=business\n" +
             "data.contact.tel.number=2345678901\n" +
             "data.address.name=Michaels address\n" +
             "data.contact.mobile.number=0987654321\n" +
@@ -112,7 +112,7 @@ public class ConfigToolsTest extends TestCase {
       doConfigTests(cfg);
 
       //@formatter:off
-      assertEquals("written config after tests", cfg.writeConfig(), "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+      assertEquals(cfg.writeConfig(), "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
             "<data>\n" +
             "   <address>\n" +
             "      <number>1</number>\n" +

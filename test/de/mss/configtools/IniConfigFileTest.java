@@ -1,16 +1,14 @@
 package de.mss.configtools;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class IniConfigFileTest extends TestCase {
+public class IniConfigFileTest {
 
 
    private void doTests(IniConfigFile cfg) {
-      assertNotNull("ini is not null", cfg);
-
-
+      assertNotNull(cfg);
    }
 
 

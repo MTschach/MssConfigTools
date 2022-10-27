@@ -1,32 +1,33 @@
 package de.mss.configtools;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class ConfigValueTest extends TestCase {
+public class ConfigValueTest {
 
    @Test
    public void test() {
       final ConfigValue t = new ConfigValue("test");
 
-      assertEquals("Value", "test", t.getValue());
-      assertEquals("OrigValue", "test", t.getOrigValue());
-      assertNull("MergedValue", t.getMergedValue());
+      assertEquals("test", t.getValue());
+      assertEquals("test", t.getOrigValue());
+      assertNull(t.getMergedValue());
 
       t.setMergedValue("merged");
-      assertEquals("Value", "merged", t.getValue());
-      assertEquals("OrigValue", "test", t.getOrigValue());
-      assertEquals("MergedValue", "merged", t.getMergedValue());
+      assertEquals("merged", t.getValue());
+      assertEquals("test", t.getOrigValue());
+      assertEquals("merged", t.getMergedValue());
    }
 
 
    @Test
    public void test2() {
       final ConfigValue t = new ConfigValue("test", "merged");
-      assertEquals("Value", "merged", t.getValue());
-      assertEquals("OrigValue", "test", t.getOrigValue());
-      assertEquals("MergedValue", "merged", t.getMergedValue());
+      assertEquals("merged", t.getValue());
+      assertEquals("test", t.getOrigValue());
+      assertEquals("merged", t.getMergedValue());
 
    }
 
@@ -34,8 +35,8 @@ public class ConfigValueTest extends TestCase {
    @Test
    public void testToString() {
       final ConfigValue t = new ConfigValue("test");
-      assertEquals("toString", "Value {test}, OrigValue {test} ", t.toString());
+      assertEquals("Value {test}, OrigValue {test} ", t.toString());
       t.setMergedValue("merged");
-      assertEquals("toString", "Value {merged}, OrigValue {test}, MergedValue {merged} ", t.toString());
+      assertEquals("Value {merged}, OrigValue {test}, MergedValue {merged} ", t.toString());
    }
 }

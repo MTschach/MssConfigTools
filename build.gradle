@@ -8,40 +8,19 @@
 
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
-
-def artifact = new Properties()
-artifact.load(new FileInputStream("${project.projectDir}${File.separator}deploy.settings"))
-
-version = artifact.version
-
-buildscript {
-    repositories {
-        mavenLocal()
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
-        jcenter()
-    }
-   dependencies {
-      classpath 'com.android.tools.build:gradle:2.2.2'
-      classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-      classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release'
-      classpath 'de.jjohannes.gradle:extra-java-module-info:0.10'
-    }
-}
-
-apply plugin: 'de.jjohannes.extra-java-module-info'
+apply plugin: 'jacoco'
 
 apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
 
 apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
 
-extraJavaModuleInfo {
-   automaticModule('junit-4.12.jar','')
-   automaticModule('hamcrest-core-1.3.jar', '')
-   automaticModule('log4j-core-2.17.1.jar', '')
-   automaticModule('log4j-api-2.17.1.jar', '')
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/eclipse.gradle'
+
+buildscript {
+   apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/buildscript.gradle'
 }
+
+apply plugin: "name.remal.module-info-generator"
 
 sourceSets {
    main {
@@ -58,20 +37,28 @@ sourceSets {
 
 
 dependencies {
-   implementation 'org.apache.logging.log4j:log4j-core:latest.release'
-   implementation 'org.apache.logging.log4j:log4j-api:latest.release'
-   implementation 'Mss:MssUtils:latest.release'
+   implementation       group: 'org.apache.logging.log4j'                     , name: 'log4j-core'                      , version: "${loggingVersion}"
+   implementation       group: 'org.apache.logging.log4j'                     , name: 'log4j-api'                       , version: "${loggingVersion}"
+   implementation       group: 'Mss'                                          , name: 'MssUtils'                        , version: 'latest.release'
    
-   testImplementation 'junit:junit:4.12'
+   testImplementation   group: 'org.junit.jupiter'                            , name: 'junit-jupiter-engine'            , version: "${junitVersion}"
 }
 
-//create a single Jar with all dependencies
-task fatJar(type: Jar) {
-   manifest {
-        attributes 'Implementation-Title': 'MssConfigTools',  
-         'Implementation-Version': version
-    }
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+
+jacocoTestReport {
+   dependsOn test
+   reports {
+      xml.required = true
+   }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.generateModuleInfo {
+   moduleName = 'mss.configtools'
+   exports {
+      includes.add('de.mss.configtools')
+   }
 }
